@@ -4,8 +4,10 @@ import { useRouter } from '../components/Router';
 import { supabase } from '../lib/supabase';
 import { ProjectWithImages } from '../types/database';
 import { Plus, Edit, Trash2, Loader2, X, Image as ImageIcon, Upload } from 'lucide-react';
+import { useTranslation } from '../contexts/TranslationContext';
 
 export function Admin() {
+  const { t } = useTranslation();
   const { user, loading: authLoading } = useAuth();
   const { navigate } = useRouter();
   const [projects, setProjects] = useState<ProjectWithImages[]>([]);
@@ -55,7 +57,7 @@ export function Admin() {
   };
 
   const handleDelete = async (projectId: string) => {
-    if (!confirm('Are you sure you want to delete this project?')) return;
+    if (!confirm(t('admin.areYouSureDelete'))) return;
 
     try {
       const { error } = await supabase
@@ -67,7 +69,7 @@ export function Admin() {
       await loadProjects();
     } catch (error) {
       console.error('Error deleting project:', error);
-      alert('Failed to delete project');
+      alert(t('admin.failedToDeleteProject'));
     }
   };
 
@@ -98,15 +100,15 @@ export function Admin() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-4xl font-bold text-slate-800">Admin Dashboard</h1>
-          <p className="text-slate-600 mt-2">Manage your woodworking projects</p>
+          <h1 className="text-4xl font-bold text-slate-800">{t('admin.title')}</h1>
+          <p className="text-slate-600 mt-2">{t('admin.subtitle')}</p>
         </div>
         <button
           onClick={() => setShowForm(true)}
           className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-semibold flex items-center space-x-2 transition-colors"
         >
           <Plus size={20} />
-          <span>New Project</span>
+          <span>{t('admin.newProject')}</span>
         </button>
       </div>
 
@@ -117,14 +119,14 @@ export function Admin() {
       ) : projects.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-xl shadow-lg">
           <ImageIcon className="mx-auto text-slate-300 mb-4" size={64} />
-          <h3 className="text-xl font-semibold text-slate-700 mb-2">No projects yet</h3>
-          <p className="text-slate-500 mb-6">Create your first project to get started</p>
+          <h3 className="text-xl font-semibold text-slate-700 mb-2">{t('admin.noProjectsYet')}</h3>
+          <p className="text-slate-500 mb-6">{t('admin.createFirstProject')}</p>
           <button
             onClick={() => setShowForm(true)}
             className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center space-x-2"
           >
             <Plus size={20} />
-            <span>Create Project</span>
+            <span>{t('admin.createProject')}</span>
           </button>
         </div>
       ) : (
@@ -148,7 +150,7 @@ export function Admin() {
                 <h3 className="text-xl font-bold text-slate-800 mb-2">{project.name}</h3>
                 <p className="text-slate-600 text-sm line-clamp-2 mb-4">{project.description}</p>
                 <div className="text-xs text-slate-500 mb-4">
-                  {project.images.length} {project.images.length === 1 ? 'image' : 'images'}
+                  {project.images.length} {project.images.length === 1 ? t('admin.image') : t('admin.images')}
                 </div>
                 <div className="flex space-x-2">
                   <button
@@ -156,14 +158,14 @@ export function Admin() {
                     className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium flex items-center justify-center space-x-2 transition-colors"
                   >
                     <Edit size={16} />
-                    <span>Edit</span>
+                    <span>{t('admin.edit')}</span>
                   </button>
                   <button
                     onClick={() => handleDelete(project.id)}
                     className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium flex items-center justify-center space-x-2 transition-colors"
                   >
                     <Trash2 size={16} />
-                    <span>Delete</span>
+                    <span>{t('admin.delete')}</span>
                   </button>
                 </div>
               </div>
@@ -196,6 +198,7 @@ interface ImageFile {
 }
 
 function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
+  const { t } = useTranslation();
   const [name, setName] = useState(project?.name || '');
   const [description, setDescription] = useState(project?.description || '');
   const [images, setImages] = useState<ImageFile[]>(
@@ -224,13 +227,13 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      setError('Please select an image file');
+      setError(t('admin.pleaseSelectImageFile'));
       return;
     }
 
     // Validate file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
-      setError('Image size must be less than 10MB');
+      setError(t('admin.imageSizeTooLarge'));
       return;
     }
 
@@ -286,7 +289,7 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
       const validImages = images.filter(img => img.file || img.existingUrl);
 
       if (validImages.length === 0) {
-        setError('Please add at least one image');
+        setError(t('admin.pleaseAddAtLeastOneImage'));
         setLoading(false);
         setUploading(false);
         return;
@@ -365,7 +368,7 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
       onSuccess();
     } catch (err: any) {
       console.error('Error saving project:', err);
-      setError(err.message || 'Failed to save project. Please try again.');
+      setError(err.message || t('admin.failedToSaveProject'));
       setLoading(false);
       setUploading(false);
     }
@@ -376,7 +379,7 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
       <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full my-8">
         <div className="flex justify-between items-center p-6 border-b border-slate-200">
           <h2 className="text-2xl font-bold text-slate-800">
-            {project ? 'Edit Project' : 'New Project'}
+            {project ? t('admin.editProject') : t('admin.newProject')}
           </h2>
           <button
             onClick={onClose}
@@ -395,7 +398,7 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
 
           <div>
             <label htmlFor="name" className="block text-sm font-semibold text-slate-700 mb-2">
-              Project Name *
+              {t('admin.projectName')} *
             </label>
             <input
               type="text"
@@ -404,13 +407,13 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all"
-              placeholder="Rustic Dining Table"
+              placeholder={t('admin.placeholderProjectName')}
             />
           </div>
 
           <div>
             <label htmlFor="description" className="block text-sm font-semibold text-slate-700 mb-2">
-              Description *
+              {t('admin.description')} *
             </label>
             <textarea
               id="description"
@@ -419,25 +422,25 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
               className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all resize-none"
-              placeholder="Describe your project..."
+              placeholder={t('admin.describeYourProject')}
             />
           </div>
 
           <div>
             <div className="flex justify-between items-center mb-2">
               <label className="block text-sm font-semibold text-slate-700">
-                Images *
+                {t('admin.imagesLabel')} *
               </label>
               <button
                 type="button"
                 onClick={handleAddImageField}
                 className="text-sm text-amber-600 hover:text-amber-700 font-medium"
               >
-                + Add Image
+                {t('admin.addImage')}
               </button>
             </div>
             <p className="text-xs text-slate-500 mb-3">
-              Select images from your computer (JPG, PNG, etc. Max 10MB per image)
+              {t('admin.selectImageHint')}
             </p>
             <div className="space-y-4 max-h-96 overflow-y-auto">
               {images.map((image, index) => (
@@ -475,7 +478,7 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
                         className="w-full px-4 py-2 border-2 border-dashed border-slate-300 rounded-lg text-slate-600 hover:border-amber-500 hover:text-amber-600 transition-colors flex items-center justify-center space-x-2"
                       >
                         <Upload size={18} />
-                        <span>{image.file ? 'Change Image' : 'Select Image'}</span>
+                        <span>{image.file ? t('admin.changeImage') : t('admin.selectImage')}</span>
                       </button>
                       {image.file && (
                         <p className="text-xs text-slate-500">
@@ -504,7 +507,7 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
             {uploading && (
               <div className="mt-4 flex items-center space-x-2 text-amber-600">
                 <Loader2 className="animate-spin" size={16} />
-                <span className="text-sm">Uploading images...</span>
+                <span className="text-sm">{t('admin.uploadingImages')}</span>
               </div>
             )}
           </div>
@@ -515,7 +518,7 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
               onClick={onClose}
               className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-3 rounded-lg font-semibold transition-colors"
             >
-              Cancel
+              {t('admin.cancel')}
             </button>
             <button
               type="submit"
@@ -525,10 +528,10 @@ function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
               {loading ? (
                 <>
                   <Loader2 className="animate-spin" size={20} />
-                  <span>Saving...</span>
+                  <span>{t('admin.saving')}</span>
                 </>
               ) : (
-                <span>{project ? 'Update Project' : 'Create Project'}</span>
+                <span>{project ? t('admin.updateProject') : t('admin.createProjectButton')}</span>
               )}
             </button>
           </div>

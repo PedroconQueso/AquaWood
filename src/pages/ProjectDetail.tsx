@@ -3,8 +3,10 @@ import { supabase } from '../lib/supabase';
 import { ProjectWithImages } from '../types/database';
 import { useRouter, Link } from '../components/Router';
 import { Loader2, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslation } from '../contexts/TranslationContext';
 
 export function ProjectDetail() {
+  const { t } = useTranslation();
   const { getParam } = useRouter();
   const projectId = getParam('id');
   const [project, setProject] = useState<ProjectWithImages | null>(null);
@@ -73,9 +75,9 @@ export function ProjectDetail() {
   if (!project) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-3xl font-bold text-slate-800 mb-4">Project Not Found</h1>
+        <h1 className="text-3xl font-bold text-slate-800 mb-4">{t('projectDetail.projectNotFound')}</h1>
         <Link to="/projects" className="text-amber-600 hover:text-amber-700 font-semibold">
-          ← Back to Projects
+          ← {t('projectDetail.backToProjects')}
         </Link>
       </div>
     );
@@ -88,7 +90,7 @@ export function ProjectDetail() {
         className="inline-flex items-center text-amber-600 hover:text-amber-700 font-semibold mb-8 group"
       >
         <ArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform" size={20} />
-        Back to Projects
+        {t('projectDetail.backToProjects')}
       </Link>
 
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -135,7 +137,7 @@ export function ProjectDetail() {
           </div>
         ) : (
           <div className="aspect-[16/9] bg-slate-200 flex items-center justify-center text-slate-400">
-            No images available
+            {t('projectDetail.noImagesAvailable')}
           </div>
         )}
 
@@ -147,7 +149,7 @@ export function ProjectDetail() {
 
           {project.images.length > 1 && (
             <div className="mt-12 pt-8 border-t border-slate-200">
-              <h3 className="text-xl font-bold text-slate-800 mb-4">Gallery</h3>
+              <h3 className="text-xl font-bold text-slate-800 mb-4">{t('projectDetail.gallery')}</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {project.images.map((image, index) => (
                   <button
@@ -173,13 +175,13 @@ export function ProjectDetail() {
       </div>
 
       <div className="mt-12 text-center bg-slate-800 text-white rounded-xl p-8">
-        <h3 className="text-2xl font-bold mb-4">Interested in a Custom Piece?</h3>
-        <p className="text-stone-300 mb-6">Let's create something special together</p>
+        <h3 className="text-2xl font-bold mb-4">{t('projectDetail.interestedInCustom')}</h3>
+        <p className="text-stone-300 mb-6">{t('projectDetail.interestedInCustomDesc')}</p>
         <Link
           to="/contact"
           className="inline-block bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
         >
-          Get In Touch
+          {t('home.getInTouch')}
         </Link>
       </div>
     </div>

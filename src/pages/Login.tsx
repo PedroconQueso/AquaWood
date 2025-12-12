@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useRouter } from '../components/Router';
 import { LogIn, Loader2 } from 'lucide-react';
+import { useTranslation } from '../contexts/TranslationContext';
 
 export function Login() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -25,7 +27,7 @@ export function Login() {
     const { error } = await signIn(email, password);
 
     if (error) {
-      setError(error.message || 'Invalid login credentials');
+      setError(error.message || t('login.invalidCredentials'));
       setLoading(false);
     } else {
       navigate('/admin');
@@ -40,8 +42,8 @@ export function Login() {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 rounded-full mb-4">
               <LogIn className="text-amber-600" size={32} />
             </div>
-            <h1 className="text-3xl font-bold text-slate-800 mb-2">Admin Login</h1>
-            <p className="text-slate-600">Sign in to manage your projects</p>
+            <h1 className="text-3xl font-bold text-slate-800 mb-2">{t('login.title')}</h1>
+            <p className="text-slate-600">{t('login.subtitle')}</p>
           </div>
 
           {error && (
@@ -53,7 +55,7 @@ export function Login() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
-                Email
+                {t('login.email')}
               </label>
               <input
                 type="email"
@@ -68,7 +70,7 @@ export function Login() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">
-                Password
+                {t('login.password')}
               </label>
               <input
                 type="password"
@@ -89,12 +91,12 @@ export function Login() {
               {loading ? (
                 <>
                   <Loader2 className="animate-spin" size={20} />
-                  <span>Signing in...</span>
+                  <span>{t('login.signingIn')}</span>
                 </>
               ) : (
                 <>
                   <LogIn size={20} />
-                  <span>Sign In</span>
+                  <span>{t('login.signIn')}</span>
                 </>
               )}
             </button>

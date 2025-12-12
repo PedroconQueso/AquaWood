@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
-import { Menu, X, LogOut } from 'lucide-react';
+import { Menu, X, LogOut, Languages } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from './Router';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from '../contexts/TranslationContext';
 
 interface LayoutProps {
   children: ReactNode;
@@ -11,11 +12,12 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, signOut } = useAuth();
+  const { t, locale, setLocale } = useTranslation();
 
   const navigation = [
-    { name: 'Home', path: '/' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'Contact', path: '/contact' },
+    { name: t('nav.home'), path: '/', key: 'home' },
+    { name: t('nav.projects'), path: '/projects', key: 'projects' },
+    { name: t('nav.contact'), path: '/contact', key: 'contact' },
   ];
 
   return (
@@ -34,7 +36,7 @@ export function Layout({ children }: LayoutProps) {
             <div className="hidden md:flex items-center space-x-8">
               {navigation.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.key}
                   to={item.path}
                   className="text-stone-200 hover:text-amber-400 transition-colors font-medium"
                 >
@@ -47,14 +49,14 @@ export function Layout({ children }: LayoutProps) {
                     to="/admin"
                     className="text-stone-200 hover:text-amber-400 transition-colors font-medium"
                   >
-                    Admin
+                    {t('nav.admin')}
                   </Link>
                   <button
                     onClick={signOut}
                     className="flex items-center space-x-2 text-stone-200 hover:text-amber-400 transition-colors"
                   >
                     <LogOut size={18} />
-                    <span>Logout</span>
+                    <span>{t('nav.logout')}</span>
                   </button>
                 </>
               )}
@@ -63,7 +65,7 @@ export function Layout({ children }: LayoutProps) {
                   to="/login"
                   className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-md font-medium transition-colors"
                 >
-                  Admin Login
+                  {t('nav.adminLogin')}
                 </Link>
               )}
             </div>
@@ -80,7 +82,7 @@ export function Layout({ children }: LayoutProps) {
             <div className="md:hidden pb-4">
               {navigation.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.key}
                   to={item.path}
                   className="block py-2 text-stone-200 hover:text-amber-400 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
@@ -95,7 +97,7 @@ export function Layout({ children }: LayoutProps) {
                     className="block py-2 text-stone-200 hover:text-amber-400 transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Admin
+                    {t('nav.admin')}
                   </Link>
                   <button
                     onClick={() => {
@@ -104,7 +106,7 @@ export function Layout({ children }: LayoutProps) {
                     }}
                     className="block py-2 text-stone-200 hover:text-amber-400 transition-colors"
                   >
-                    Logout
+                    {t('nav.logout')}
                   </button>
                 </>
               )}
@@ -114,7 +116,7 @@ export function Layout({ children }: LayoutProps) {
                   className="block py-2 text-stone-200 hover:text-amber-400 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Admin Login
+                  {t('nav.adminLogin')}
                 </Link>
               )}
             </div>
@@ -136,12 +138,12 @@ export function Layout({ children }: LayoutProps) {
                 </div>
               </div>
               <p className="text-stone-300 text-sm leading-relaxed">
-                Custom handcrafted woodworking from Quebec, specializing in beautiful rustic tables and furniture.
+                {t('footer.description')}
               </p>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-amber-400">Contact</h3>
+              <h3 className="text-lg font-semibold mb-4 text-amber-400">{t('footer.contact')}</h3>
               <div className="space-y-2 text-sm text-stone-300">
                 <p>518 Chemin du Tour-du-Lac</p>
                 <p>Quebec, QC G3B 0V6</p>
@@ -152,7 +154,7 @@ export function Layout({ children }: LayoutProps) {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-amber-400">Follow Us</h3>
+              <h3 className="text-lg font-semibold mb-4 text-amber-400">{t('footer.followUs')}</h3>
               <div className="space-y-2 text-sm">
                 <a
                   href="https://www.instagram.com/aquawoodpatagonia"
@@ -175,10 +177,27 @@ export function Layout({ children }: LayoutProps) {
           </div>
 
           <div className="border-t border-slate-700 mt-8 pt-8 text-center text-sm text-stone-400">
-            <p>&copy; {new Date().getFullYear()} Aquawood Patagonia. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Aquawood Patagonia. {t('footer.rightsReserved')}</p>
           </div>
         </div>
       </footer>
+
+      {/* Language Toggle Button - Fixed at bottom */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <div className="relative">
+          <button
+            onClick={() => {
+              const nextLocale = locale === 'en' ? 'fr' : locale === 'fr' ? 'es' : 'en';
+              setLocale(nextLocale);
+            }}
+            className="bg-amber-600 hover:bg-amber-700 text-white p-3 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center space-x-2 min-w-[60px]"
+            aria-label="Toggle language"
+          >
+            <Languages size={20} />
+            <span className="font-semibold">{locale.toUpperCase()}</span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
