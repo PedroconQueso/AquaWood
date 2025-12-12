@@ -45,12 +45,6 @@ export function Layout({ children }: LayoutProps) {
               ))}
               {user && (
                 <>
-                  <Link
-                    to="/admin"
-                    className="text-stone-200 hover:text-amber-400 transition-colors font-medium"
-                  >
-                    {t('nav.admin')}
-                  </Link>
                   <button
                     onClick={signOut}
                     className="flex items-center space-x-2 text-stone-200 hover:text-amber-400 transition-colors"
@@ -59,14 +53,6 @@ export function Layout({ children }: LayoutProps) {
                     <span>{t('nav.logout')}</span>
                   </button>
                 </>
-              )}
-              {!user && (
-                <Link
-                  to="/login"
-                  className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-md font-medium transition-colors"
-                >
-                  {t('nav.adminLogin')}
-                </Link>
               )}
             </div>
 
@@ -92,13 +78,6 @@ export function Layout({ children }: LayoutProps) {
               ))}
               {user && (
                 <>
-                  <Link
-                    to="/admin"
-                    className="block py-2 text-stone-200 hover:text-amber-400 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {t('nav.admin')}
-                  </Link>
                   <button
                     onClick={() => {
                       signOut();
@@ -109,15 +88,6 @@ export function Layout({ children }: LayoutProps) {
                     {t('nav.logout')}
                   </button>
                 </>
-              )}
-              {!user && (
-                <Link
-                  to="/login"
-                  className="block py-2 text-stone-200 hover:text-amber-400 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {t('nav.adminLogin')}
-                </Link>
               )}
             </div>
           )}
@@ -140,6 +110,14 @@ export function Layout({ children }: LayoutProps) {
               <p className="text-stone-300 text-sm leading-relaxed">
                 {t('footer.description')}
               </p>
+              <div className="mt-4">
+                <Link
+                  to={user ? '/admin' : '/login'}
+                  className="inline-block text-sm text-stone-300 hover:text-amber-400 transition-colors"
+                >
+                  {user ? t('nav.admin') : t('nav.adminLogin')}
+                </Link>
+              </div>
             </div>
 
             <div>
