@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Tip: replace YOUR_DOMAIN_HERE with your real domain (e.g. https://aquawoodpatagonia.com)
+Sitemap: https://aquawoodpatagonia.com/sitemap.xml
+
+

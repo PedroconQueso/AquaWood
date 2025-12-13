@@ -1,12 +1,38 @@
 import { Hammer, Trees, Award, Heart } from 'lucide-react';
-import { Link } from '../components/Router';
+import { Link } from 'react-router-dom';
 import { useTranslation } from '../contexts/TranslationContext';
+import { Seo } from '../components/Seo';
 
 export function Home() {
   const { t } = useTranslation();
 
   return (
     <div>
+      <Seo
+        title="AQUAWOOD — Bois rustique"
+        description="Custom handcrafted woodworking from Quebec, specializing in beautiful rustic tables and furniture."
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "Aquawood Patagonia",
+          description:
+            "Custom handcrafted woodworking from Quebec, specializing in beautiful rustic tables and furniture.",
+          telephone: "+1-581-993-9987",
+          email: "aquawoodpatagonia@gmail.com",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "518 Chemin du Tour-du-Lac",
+            addressLocality: "Quebec",
+            addressRegion: "QC",
+            postalCode: "G3B 0V6",
+            addressCountry: "CA"
+          },
+          sameAs: [
+            "https://www.instagram.com/aquawoodpatagonia",
+            "https://www.facebook.com/profile.php?id=61570127055866"
+          ]
+        }}
+      />
       <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/phototable.jpg)' }}></div>
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-slate-800/60 to-amber-900/70"></div>

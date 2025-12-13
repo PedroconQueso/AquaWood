@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useRouter } from '../components/Router';
+import { useNavigate } from 'react-router-dom';
 import { LogIn, Loader2 } from 'lucide-react';
 import { useTranslation } from '../contexts/TranslationContext';
+import { Seo } from '../components/Seo';
 
 export function Login() {
   const { t } = useTranslation();
@@ -11,11 +12,11 @@ export function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { signIn, user } = useAuth();
-  const { navigate } = useRouter();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      navigate('/admin');
+      navigate('/admin', { replace: true });
     }
   }, [user, navigate]);
 
@@ -30,12 +31,13 @@ export function Login() {
       setError(error.message || t('login.invalidCredentials'));
       setLoading(false);
     } else {
-      navigate('/admin');
+      navigate('/admin', { replace: true });
     }
   };
 
   return (
     <div className="min-h-[calc(100vh-300px)] flex items-center justify-center px-4 py-16">
+      <Seo title="Admin Login" description="Admin login for Aquawood Patagonia." noindex />
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">

@@ -1,15 +1,16 @@
 import { useEffect, useState, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useRouter } from '../components/Router';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { ProjectWithImages } from '../types/database';
 import { Plus, Edit, Trash2, Loader2, X, Image as ImageIcon, Upload } from 'lucide-react';
 import { useTranslation } from '../contexts/TranslationContext';
+import { Seo } from '../components/Seo';
 
 export function Admin() {
   const { t } = useTranslation();
   const { user, loading: authLoading } = useAuth();
-  const { navigate } = useRouter();
+  const navigate = useNavigate();
   const [projects, setProjects] = useState<ProjectWithImages[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -17,7 +18,7 @@ export function Admin() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      navigate('/login');
+      navigate('/login', { replace: true });
     }
   }, [user, authLoading, navigate]);
 
@@ -91,6 +92,7 @@ export function Admin() {
   if (authLoading || !user) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
+        <Seo title="Admin" description="Admin dashboard for Aquawood Patagonia." noindex />
         <Loader2 className="animate-spin text-amber-600" size={48} />
       </div>
     );
@@ -98,6 +100,7 @@ export function Admin() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Seo title="Admin" description="Admin dashboard for Aquawood Patagonia." noindex />
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-4xl font-bold text-slate-800">{t('admin.title')}</h1>

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { ProjectWithImages } from '../types/database';
-import { Link } from '../components/Router';
+import { Link } from 'react-router-dom';
 import { Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from '../contexts/TranslationContext';
+import { Seo } from '../components/Seo';
 
 export function Projects() {
   const { t } = useTranslation();
@@ -53,6 +54,10 @@ export function Projects() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Seo
+        title="Projects"
+        description="Browse custom rustic tables and furniture handcrafted in Quebec."
+      />
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-6xl font-bold text-slate-800 mb-4">{t('projects.title')}</h1>
         <div className="w-24 h-1 bg-amber-600 mx-auto mb-6"></div>

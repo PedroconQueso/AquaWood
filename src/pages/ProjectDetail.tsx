@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { ProjectWithImages } from '../types/database';
-import { useRouter, Link } from '../components/Router';
+import { Link, useParams } from 'react-router-dom';
 import { Loader2, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from '../contexts/TranslationContext';
+import { Seo } from '../components/Seo';
 
 export function ProjectDetail() {
   const { t } = useTranslation();
-  const { getParam } = useRouter();
-  const projectId = getParam('id');
+  const { id: projectId } = useParams();
   const [project, setProject] = useState<ProjectWithImages | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -67,6 +67,7 @@ export function ProjectDetail() {
   if (loading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
+        <Seo title="Project" description="Project details from Aquawood Patagonia." />
         <Loader2 className="animate-spin text-amber-600" size={48} />
       </div>
     );
@@ -75,6 +76,7 @@ export function ProjectDetail() {
   if (!project) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 text-center">
+        <Seo title="Project not found" description="This project could not be found." />
         <h1 className="text-3xl font-bold text-slate-800 mb-4">{t('projectDetail.projectNotFound')}</h1>
         <Link to="/projects" className="text-amber-600 hover:text-amber-700 font-semibold">
           ← {t('projectDetail.backToProjects')}
@@ -83,8 +85,15 @@ export function ProjectDetail() {
     );
   }
 
+  const metaDescription =
+    (project.description || '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 160) || 'Project details from Aquawood Patagonia.';
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Seo title={project.name} description={metaDescription} type="article" />
       <Link
         to="/projects"
         className="inline-flex items-center text-amber-600 hover:text-amber-700 font-semibold mb-8 group"

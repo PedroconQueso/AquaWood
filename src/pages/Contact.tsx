@@ -1,11 +1,16 @@
 import { MapPin, Phone, Mail, Instagram, Facebook } from 'lucide-react';
 import { useTranslation } from '../contexts/TranslationContext';
+import { Seo } from '../components/Seo';
 
 export function Contact() {
   const { t } = useTranslation();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Seo
+        title="Contact"
+        description="Contact Aquawood Patagonia for custom handcrafted rustic tables and furniture in Quebec."
+      />
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-6xl font-bold text-slate-800 mb-4">{t('contact.title')}</h1>
         <div className="w-24 h-1 bg-amber-600 mx-auto mb-6"></div>

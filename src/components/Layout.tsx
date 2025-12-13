@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Menu, X, LogOut, Languages } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from './Router';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from '../contexts/TranslationContext';
 
