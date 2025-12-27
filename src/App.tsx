@@ -8,6 +8,7 @@ import { Contact } from './pages/Contact';
 import { Login } from './pages/Login';
 import { Admin } from './pages/Admin';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Layout>
+        <Analytics />
       </AuthProvider>
     </TranslationProvider>
   );
