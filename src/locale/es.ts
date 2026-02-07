@@ -51,7 +51,7 @@ export const es = {
   // Contact Page
   contact: {
     title: 'Póngase en Contacto',
-    subtitle: '¿Tiene un proyecto en mente? Nos encantaría saber de usted. Contáctenos y creemos algo hermoso juntos.',
+    subtitle: 'Contáctenos para una cotización de su proyecto.',
     contactInfo: 'Información de Contacto',
     address: 'Dirección',
     phone: 'Teléfono',
@@ -65,6 +65,28 @@ export const es = {
     sendButton: 'Enviar Mensaje',
     messageSent: '¡Mensaje Enviado!',
     messageSentDesc: 'Nos pondremos en contacto con usted lo antes posible.',
+    // Customization options
+    customizationTitle: 'Opciones Personalizables',
+    customizationIntro: 'Las siguientes opciones son personalizables según sus necesidades:',
+    dimensions: 'Dimensiones',
+    woodType: 'Tipo de Madera',
+    epoxyOptions: 'Cantidad, Diseño y Color de Epoxi',
+    legStyle: 'Estilo de Patas',
+    adviceText: 'Estamos aquí para asesorarlo en persona en el taller, por correo electrónico o por teléfono.',
+    // Wood types
+    woodTypesTitle: 'Tipos de Madera Disponibles',
+    maple: 'Arce',
+    birch: 'Abedul',
+    cherry: 'Cerezo',
+    ash: 'Fresno',
+    redPine: 'Pino Rojo',
+    redOak: 'Roble Rojo',
+    whiteOak: 'Roble Blanco',
+    butternut: 'Nogal Ceniciento',
+    blackWalnut: 'Nogal Negro',
+    // Dimensions
+    dimensionsTitle: 'Guía de Dimensiones',
+    dimensionsDesc: 'Aquí hay una guía de dimensiones estándar para mesas. También están disponibles dimensiones personalizadas.',
   },
 
   // Login Page

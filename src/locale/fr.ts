@@ -51,7 +51,7 @@ export const fr = {
   // Contact Page
   contact: {
     title: 'Contactez-Nous',
-    subtitle: 'Vous avez un projet en tête? Nous aimerions avoir de vos nouvelles. Contactez-nous et créons quelque chose de beau ensemble.',
+    subtitle: 'Contactez-nous pour une soumission pour votre projet.',
     contactInfo: 'Informations de Contact',
     address: 'Adresse',
     phone: 'Téléphone',
@@ -65,6 +65,28 @@ export const fr = {
     sendButton: 'Envoyer le Message',
     messageSent: 'Message Envoyé!',
     messageSentDesc: 'Nous vous répondrons dans les plus brefs délais.',
+    // Customization options
+    customizationTitle: 'Options Personnalisables',
+    customizationIntro: 'Les choix suivants sont personnalisables selon vos besoins :',
+    dimensions: 'Dimensions',
+    woodType: 'Essence de Bois',
+    epoxyOptions: 'Quantité, Design et Couleur d\'Époxy',
+    legStyle: 'Modèle de Pieds',
+    adviceText: 'Nous sommes là pour vous conseiller en personne à l\'atelier, par courriel ou par téléphone.',
+    // Wood types
+    woodTypesTitle: 'Essences de Bois Disponibles',
+    maple: 'Érable',
+    birch: 'Merisier',
+    cherry: 'Cerisier',
+    ash: 'Frêne',
+    redPine: 'Pin Rouge',
+    redOak: 'Chêne Rouge',
+    whiteOak: 'Chêne Blanc',
+    butternut: 'Noyer Cendré',
+    blackWalnut: 'Noyer Noir',
+    // Dimensions
+    dimensionsTitle: 'Guide des Dimensions',
+    dimensionsDesc: 'Voici un guide des dimensions standards pour les tables. Des dimensions sur mesure sont également disponibles.',
   },
 
   // Login Page

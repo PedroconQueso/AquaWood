@@ -51,7 +51,7 @@ export const en = {
   // Contact Page
   contact: {
     title: 'Get In Touch',
-    subtitle: 'Have a project in mind? We\'d love to hear from you. Reach out and let\'s create something beautiful together.',
+    subtitle: 'Contact us for a quote on your project.',
     contactInfo: 'Contact Information',
     address: 'Address',
     phone: 'Phone',
@@ -65,6 +65,28 @@ export const en = {
     sendButton: 'Send Message',
     messageSent: 'Message Sent!',
     messageSentDesc: 'We\'ll get back to you as soon as possible.',
+    // Customization options
+    customizationTitle: 'Customizable Options',
+    customizationIntro: 'The following choices are customizable according to your needs:',
+    dimensions: 'Dimensions',
+    woodType: 'Wood Type',
+    epoxyOptions: 'Epoxy Quantity, Design and Color',
+    legStyle: 'Leg Style',
+    adviceText: 'We are here to advise you in person at the workshop, by email or by phone.',
+    // Wood types
+    woodTypesTitle: 'Available Wood Types',
+    maple: 'Maple',
+    birch: 'Birch',
+    cherry: 'Cherry',
+    ash: 'Ash',
+    redPine: 'Red Pine',
+    redOak: 'Red Oak',
+    whiteOak: 'White Oak',
+    butternut: 'Butternut',
+    blackWalnut: 'Black Walnut',
+    // Dimensions
+    dimensionsTitle: 'Dimensions Guide',
+    dimensionsDesc: 'Here is a guide to standard table dimensions. Custom dimensions are also available.',
   },
 
   // Login Page
